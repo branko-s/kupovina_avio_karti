@@ -1,28 +1,42 @@
-create or alter table korisnik
+alter table korisnik
 (
-	ime_prezime			varchar(40)		not null,
-	e-mail				varchar(40)		unique,
-	adresa				varchar(50)		not null,
-	pol					char(1)			check(pol='m' or pol='z')
+	ime_prezime			nvarchar(40)	not null,
+	email				varchar(40)		unique,
+	adresa				nvarchar(50)	not null,
+	pol					char(1)			check(pol in ('m','z')),
 	username			varchar(20)		primary key,
 	pass				varchar(20)		unique,
-	tip					char(1)			check(tip='u' or tip='a')
+	tip					char(1)			check(tip in ('u','a'))
 )
-
-create or alter table aerodrom
+/*
+create table aerodrom
 (
 	id					smallint		primary key,
 	naziv				varchar(40)		not null,
 	grad				varchar(30)		not null
 )
 
-create or alter table avio_kompanija
+create table avio_kompanija
 (
 	id					smallint		primary key,
-	naziv				varchar(30)		not null,
+	naziv				varchar(30)		not null
 )
 
-create or alter table let
+create table avion 
+(
+	id					smallint		primary key,
+	naziv				varchar(20)		not null,
+	br_red_biz_klase	smallint		check(br_red_biz_klase>=0),
+	br_red_eko_klase	smallint		check(br_red_eko_klase>=0),
+	br_kolona			tinyint			check(br_kolona>0),
+	avio_kompanija_id	smallint		not null,
+	foreign key(avio_kompanija_id) references avio_kompanija(id),
+	check(br_red_biz_klase >= 0),
+	check(br_red_eko_klase >= 0),
+	check(br_kolona > 0 and br_kolona < br_red_biz_klase + br_red_eko_klase)
+)
+
+create table let
 (
 	broj_leta			bigint			primary key,	
 	pilot				varchar(40)		not null,
@@ -40,47 +54,35 @@ create or alter table let
 	check(cena>=0)
 )
 
-create or alter table avion 
+create table sediste
 (
-	id					smallint		primary key,
-	naziv				varchar(20)		not null,
-	br_red_biz_klase	smallint		not null,
-	br_red_eko_klase	smallint		not null,
-	br_kolona			tinyint			not null,
-	avio_kompanija_id	smallint		not null,
-	foreign key(avio_kompanija_id) references avio_kompanija(id),
-	check(br_red_biz_klase>=0),
-	check(br_red_eko_klase>=0),
-	check(br_kolona>0)
-)
-
-create or alter table sediste
-(
-	red					tinyint			check(), --ispisi fju red <= avion.br_red_biz_klase + avion.br_red_eko_klase
-	kolona				tinyint			check(), --ispisi fju kolona <= avion.br_kolona
-	klasa				char(1)			check(klasa='b' or klasa='e'), -- if red < avion.br_red_biz_klase klasa=('b' or null) else klasa=('e' or null)
+	red					tinyint			check(red>0),
+	kolona				tinyint			check(kolona>0),
+	klasa				char(1)			check(klasa='b' or klasa='e'),
 	avion_id			smallint		not null,
-	primary key(red, kolona, avion_id)
+	primary key(red, kolona, avion_id),
+	foreign key(avion_id) references avion(id)
 )
 
-create or alter table zauzetost_sedista
+create table zauzetost_sedista
 (
-	red					tinyint			
-	kolona				tinyint			
-	broj_leta			bigint			
-	zauzetost			char(1)			check(zauzetost='z' or zauzetost='s'),
-	primary key(red, kolona),
-	foreign key(red) references sediste(red),
-	foreign key(kolona) references sediste(kolona),
+	red					tinyint			check(red>0),
+	kolona				tinyint			check(kolona>0),
+	broj_leta			bigint			not null,
+	zauzetost			char(1)			check(zauzetost='z' or zauzetost='s' or zauzetost=null),
+	primary key(red, kolona, broj_leta),
+	foreign key(broj_leta) references let(broj_leta)
 )
 
-create or alter table karta
+create table karta
 (
 	putnik				varchar(40)		not null,
 	broj_leta			bigint			not null,
-	red_sedista			tinyint			not null
-	kolona_sedista		tinyint				
-	klasa				char(1)
-	kapija				tinyint
-	ukupna_cena			int
-)
+	red					tinyint			check(red>0),
+	kolona				tinyint			check(kolona>0),
+	klasa				char(1)			check(klasa='b' or klasa='e'),
+	kapija				tinyint			check(kapija>0),
+	ukupna_cena			int				check(ukupna_cena>=0),
+	primary key(putnik, broj_leta),
+	foreign key(broj_leta) references let(broj_leta)
+)*/
