@@ -1,88 +1,88 @@
-alter table korisnik
+drop table test2
+drop table test
+
+drop table karta
+drop table zauzetost_sedista
+drop table sediste
+drop table let
+drop table avion
+drop table korisnik
+drop table avio_kompanija
+drop table aerodrom
+
+create table korisnik
 (
-	ime_prezime			nvarchar(40)	not null,
-	email				varchar(40)		unique,
-	adresa				nvarchar(50)	not null,
-	pol					char(1)			check(pol in ('m','z')),
-	username			varchar(20)		primary key,
-	pass				varchar(20)		unique,
-	tip					char(1)			check(tip in ('u','a'))
+	username			varchar(20)		primary key		,
+	pass				varchar(20)		not null		unique,
+	email				varchar(40)		not null		unique check(email like '%@%'),
+	ime_prezime			nvarchar(40)	not null		,
+	adresa				nvarchar(50)	not null		,
+	pol					char(1)							check(pol in ('m','z')), --nije obavezno za unosenje
+	tip					char(1)			not null		check(tip in ('u','a'))  --u user, a admin
 )
-/*
+
 create table aerodrom
 (
-	id					smallint		primary key,
-	naziv				varchar(40)		not null,
-	grad				varchar(30)		not null
+	id					smallint		primary key		,
+	naziv				nvarchar(40)	not null		,
+	grad				nvarchar(30)	not null
 )
 
 create table avio_kompanija
 (
-	id					smallint		primary key,
-	naziv				varchar(30)		not null
+	id					smallint		primary key		,
+	naziv				nvarchar(30)	not null
 )
 
-create table avion 
+create table avion
 (
-	id					smallint		primary key,
-	naziv				varchar(20)		not null,
-	br_red_biz_klase	smallint		check(br_red_biz_klase>=0),
-	br_red_eko_klase	smallint		check(br_red_eko_klase>=0),
-	br_kolona			tinyint			check(br_kolona>0),
-	avio_kompanija_id	smallint		not null,
-	foreign key(avio_kompanija_id) references avio_kompanija(id),
-	check(br_red_biz_klase >= 0),
-	check(br_red_eko_klase >= 0),
-	check(br_kolona > 0 and br_kolona < br_red_biz_klase + br_red_eko_klase)
+	id					smallint		primary key		,
+	naziv				nvarchar(20)	not null		,
+	br_red_biz_klase	smallint		not null		check(br_red_biz_klase>=0),
+	br_red_eko_klase	smallint		not null		check(br_red_eko_klase>=0),
+	br_kolona			tinyint			not null		check(br_kolona > 0 and br_kolona < br_red_biz_klase + br_red_eko_klase),
+	avio_kompanija_id	smallint		not null		foreign key references avio_kompanija(id) on delete cascade on update cascade
 )
 
 create table let
 (
-	broj_leta			bigint			primary key,	
-	pilot				varchar(40)		not null,
-	vreme_polaska		datetimeoffset	not null,
-	vreme_dolaska		datetimeoffset	not null,
-	cena				int				not null,
-	odrediste			smallint		not null,
-	destinacija			smallint		not null,
-	avio_kompanija_id	smallint		not null,
-	avion_id			smallint		not null,
-	foreign key(odrediste) references aerodrom(id),
-	foreign key(destinacija) references aerodrom(id),
-	foreign key(avio_kompanija_id) references avio_kompanija(id),
-	foreign key(avion_id) references avion(id),
-	check(cena>=0)
+	broj_leta			bigint			primary key		,
+	pilot				nvarchar(40)	not null		,
+	vreme_polaska		datetimeoffset	not null		,
+	vreme_dolaska		datetimeoffset	not null		,
+	cena				int				not null		check(cena>=0),
+	odrediste			smallint		not null		foreign key references aerodrom(id)	on delete cascade on update cascade,
+	destinacija			smallint		not null		foreign key references aerodrom(id) on delete cascade on update cascade,
+	--nepotrebno avio_kompanija_id	smallint		not null		foreign key references avio_kompanija(id) on delete cascade on update cascade,
+	avion_id			smallint		not null		foreign key references avion(id) on delete cascade on update cascade
 )
 
 create table sediste
 (
-	red					tinyint			check(red>0),
-	kolona				tinyint			check(kolona>0),
-	klasa				char(1)			check(klasa='b' or klasa='e'),
-	avion_id			smallint		not null,
-	primary key(red, kolona, avion_id),
-	foreign key(avion_id) references avion(id)
+	red					tinyint			not null		check(red>0),
+	kolona				tinyint			not null		check(kolona>0),
+	klasa				char(1)			not null		check(klasa='b' or klasa='e'), --b biznis, e ekonomska
+	avion_id			smallint		not null		foreign key references avion(id) on delete cascade on update cascade,
+	primary key(red, kolona, avion_id)
 )
 
 create table zauzetost_sedista
 (
-	red					tinyint			check(red>0),
-	kolona				tinyint			check(kolona>0),
-	broj_leta			bigint			not null,
-	zauzetost			char(1)			check(zauzetost='z' or zauzetost='s' or zauzetost=null),
-	primary key(red, kolona, broj_leta),
-	foreign key(broj_leta) references let(broj_leta)
+	red					tinyint			not null		check(red>0),
+	kolona				tinyint			not null		check(kolona>0),
+	broj_leta			bigint			not null		foreign key references let(broj_leta) on delete cascade on update cascade,
+	zauzetost			char(1)							check(zauzetost='z' or zauzetost='s'), --z zauzeto, s slobodno
+	primary key(red, kolona, broj_leta)	
 )
 
 create table karta
 (
-	putnik				varchar(40)		not null,
-	broj_leta			bigint			not null,
-	red					tinyint			check(red>0),
-	kolona				tinyint			check(kolona>0),
-	klasa				char(1)			check(klasa='b' or klasa='e'),
-	kapija				tinyint			check(kapija>0),
-	ukupna_cena			int				check(ukupna_cena>=0),
-	primary key(putnik, broj_leta),
-	foreign key(broj_leta) references let(broj_leta)
-)*/
+	putnik				nvarchar(40)	not null		,
+	broj_leta			bigint			not null		foreign key references let(broj_leta) on delete cascade on update cascade,
+	red					tinyint			not null		check(red>0),
+	kolona				tinyint			not null		check(kolona>0),
+	klasa				char(1)			not null		check(klasa='b' or klasa='e'),
+	kapija				tinyint			not null		check(kapija>0),
+	ukupna_cena			int				not null		check(ukupna_cena>=0),
+	primary key(putnik, broj_leta)
+)
