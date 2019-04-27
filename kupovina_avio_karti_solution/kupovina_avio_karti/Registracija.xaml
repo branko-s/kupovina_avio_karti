@@ -1,0 +1,43 @@
+﻿<Window x:Class="kupovina_avio_karti.Registracija"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kupovina_avio_karti"
+        mc:Ignorable="d"
+        Title="Registracija" Height="600" Width="550" Style="{StaticResource prozor}">
+    
+    <Grid>
+        <TextBlock      Text="Registracija" Style="{StaticResource naslov}"/>
+        
+        <Label          Content="Ime i Prezime" Style="{StaticResource obicna_labela}" Margin="79,129,0,0"/>
+        <TextBox        Name="txtbx_ime" HorizontalAlignment="Left" Height="23" Margin="270,174,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        
+        <Label          Content="Pol" Style="{StaticResource obicna_labela}" Margin="79,240,0,0"/>
+        <RadioButton    Name="rdbttn_musko" Content="Muško" HorizontalAlignment="Left" Margin="270,240,0,0" VerticalAlignment="Top"/>
+        <RadioButton    Name="rdbttn_zensko" Content="Žensko" HorizontalAlignment="Left" Margin="384,243,0,0" VerticalAlignment="Top"/>
+        
+        <Label          Content="Adresa Stanovanja" Style="{StaticResource obicna_labela}" Margin="79,188,0,0"/>
+        <TextBox        Name="txtbx_adresa" HorizontalAlignment="Left" Height="23" Margin="270,304,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
+        <Label          Content="E-mail" Style="{StaticResource obicna_labela}" Margin="282,393,0,0"/>
+        <TextBox        Name="txtbx_email" HorizontalAlignment="Left" Height="23" Margin="270,304,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
+        <Label          Content="Korisničko Ime" Style="{StaticResource obicna_labela}" Margin="79,292,0,0"/>
+        <TextBox        Name="txtbx_kor_ime" Style="{StaticResource korisnicko_ime}" Margin="270,129,0,0"/>
+        
+        <Label          Content="Lozinka" Style="{StaticResource obicna_labela}" Margin="79,357,0,0"/>
+        <PasswordBox    Name="psswrdbx_lozinka" Style="{StaticResource lozinka}" Margin="292,304,0,0"/>
+        <TextBox        Name="txtbx_lozinka" Style="{StaticResource lozinka_tb}" Margin="270,365,0,0"/>
+        <Button         Name="bttn_vidljivost" Style="{StaticResource dugme_vidljivost_stl}" Template="{StaticResource dugme_vidljivost_tmplt}" Margin="426,436,0,0"/>
+
+        <Label          Content="Lozinka (Ponovite)" Style="{StaticResource obicna_labela}" Margin="79,432,0,0"/>
+        <PasswordBox    Name="psswrdbx_lozinka_2" Style="{StaticResource lozinka}" Margin="426,357,0,0"/>
+        <TextBox        Name="txtbx_lozinka_2" Style="{StaticResource lozinka_tb}" Margin="270,436,0,0"/>
+        <Button         Name="bttn_vidljivost_2" Style="{StaticResource dugme_vidljivost_stl}" Template="{StaticResource dugme_vidljivost_tmplt}" Margin="426,436,0,0"/>
+
+        <Label          Content="Label" HorizontalAlignment="Left" Margin="271,327,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label          Content="Label" HorizontalAlignment="Left" Margin="282,464,0,0" VerticalAlignment="Top"/>
+        <Button         Name="bttn_odustani" Content="Odustani" Click="Bttn_odustani_Click" Style="{StaticResource dugme}" Width="75" Margin="249,526,0,0"/>
+    </Grid>
+</Window>

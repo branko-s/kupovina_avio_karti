@@ -1,3 +1,4 @@
+//kad nece da se uloguje treba pokrenuti MSSQLSERVER servis
 
 drop table karta
 drop table zauzetost_sedista
@@ -10,8 +11,8 @@ drop table aerodrom
 
 create table korisnik
 (
-	username			varchar(20)		primary key		,
-	pass				varchar(20)		not null		unique,
+	username			varchar(15)		primary key		,
+	pass				varchar(15)		not null		unique,
 	email				varchar(40)		not null		unique check(email like '%_@___%'),
 	ime_prezime			nvarchar(40)	not null		,
 	adresa				nvarchar(50)	not null		,
@@ -36,8 +37,8 @@ create table avion
 (
 	id					smallint		primary key		identity(1,1),
 	naziv				nvarchar(20)	not null		,
-	br_red_biz_klase	smallint		not null		check(br_red_biz_klase>=0),
-	br_red_eko_klase	smallint		not null		check(br_red_eko_klase>=0),
+	br_red_biz_klase	tinyint			not null		check(br_red_biz_klase>=0),
+	br_red_eko_klase	tinyint			not null		check(br_red_eko_klase>=0),
 	br_kolona			tinyint			not null		,
 	avio_kompanija_id	smallint		not null		foreign key references avio_kompanija(id) on delete cascade on update cascade,
 	check(br_kolona > 0 and br_kolona < br_red_biz_klase + br_red_eko_klase)

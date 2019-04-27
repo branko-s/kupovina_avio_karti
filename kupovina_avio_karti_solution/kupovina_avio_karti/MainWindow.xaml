@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kupovina_avio_karti"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Kupovina avio karti" Height="500" Width="521" ResizeMode="NoResize" Style="{StaticResource prozor}">
+    
     <Grid>
+        <TextBlock Text="Prijavi se" Style="{StaticResource naslov}"/>
         
+        <Label          Content="Korisničko Ime" Style="{StaticResource obicna_labela}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu." Margin="120,114,0,0"/>
+        <TextBox        x:Name="txtbx_kor_ime" TextChanged="Txtbx_kor_ime_TextChanged" Style="{StaticResource korisnicko_ime}" Margin="120,142,0,0" Template="{DynamicResource TextBoxControlTemplate1}"/>
+        <Label          x:Name="lbl_kor_ime_val" Style="{StaticResource validacija}" Margin="207,183,0,0"/>
+
+        <Label          Content="Lozinka" Style="{StaticResource obicna_labela}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu." Margin="120,199,0,0"/>
+        <PasswordBox    x:Name="psswrdbx_lozinka" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Margin="120,227,0,0" Template="{DynamicResource PasswordBoxControlTemplate1}"/>
+        <TextBox        x:Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource lozinka_tb}" Template="{DynamicResource TextBoxControlTemplate1}" Margin="120,227,0,0"/>
+        <Button         x:Name="bttn_vidljivost" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost_stl}" Template="{DynamicResource dugme_vidljivost_tmplt}" Margin="357,227,0,0"/>
+        <Label          x:Name="lbl_loz_val" Style="{StaticResource validacija}" Margin="207,268,0,0"/>
+
+        <Button         x:Name="bttn_reg" Content="Registracija" Click="Bttn_reg_click" Style="{StaticResource dugme}" Margin="120,319,0,0" Width="126" ToolTip="Za neregistrovane korisnike."/>
+        <Button         x:Name="bttn_potvrdi" Content="Potvrdi" Click="Bttn_potvrdi_Click" Style="{StaticResource dugme}" Margin="272,319,0,0" Width="126" ToolTip="Za registrovane korisnike." IsEnabled="False" IsDefault="True"/>
+        <Button         x:Name="bttn_preskoci" Content="Preskoči" Style="{StaticResource dugme}" Margin="120,362,0,0" Width="278" ToolTip="Kupovina karata bez logovanja i registracije"/>
     </Grid>
 </Window>

@@ -23,43 +23,67 @@ namespace kupovina_avio_karti
         //private short id;
         private string naziv;
         private string grad;
-        private let dolazni_letovi;
-        private let odlazni_letovi;
+        private List<let> dolazni_letovi;
+        private List<let> odlazni_letovi;
     }
 
     class avio_kompanija
     {
         //private short id;
         private string naziv;
-        private List<let> letovi;
-        private List<pilot> piloti;
+        //private List<let> lista_letova;
+        private List<pilot> lista_pilota;
+    }
+
+    class avion
+    {
+        //private short id;
+        private string naziv;
+        private avio_kompanija vlasnik;
+        private konfiguracija_sedista konfig_sed;
     }
 
     class let
     {
-        //private long broj_leta;
+        private long broj_leta;
         private pilot pilot;
         private DateTimeOffset vreme_polaska;
         private DateTimeOffset vreme_dolaska;
         private int cena;
         private aerodrom destinacija;
         private aerodrom odrediste;
-        private avion avion;
-        private avio_kompanija avio_kompanija;
+        private avion av;
+        private avio_kompanija a_komp;
     }
 
-    class avion
+    class konfiguracija_sedista
     {
-        //id
+        private byte br_redova;
+        private byte br_kolona;
+        private sediste[,] matrica_sedista;
+    }
+
+    class sediste
+    {
+        private byte red;
+        private byte kolona;
+        private char klasa;
+        private char zauzetost;
     }
 
     class karta
     {
-
+        //private long id;
+        private let let;
+        private sediste sediste;
+        private korisnik putnik;
+        private string kapija;
+        private int cena;
     }
 
     class pilot
     {
-
+        //private byte id;
+        private string ime_prezime;
     }
 }
