@@ -5,39 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kupovina_avio_karti"
         mc:Ignorable="d"
-        Title="Registracija" Height="600" Width="550" Style="{StaticResource prozor}">
+        Title="Registracija" Height="auto" Width="auto" Style="{StaticResource prozor}" MinHeight="300" MinWidth="570">
     
-    <Grid>
-        <TextBlock      Text="Registracija" Style="{StaticResource naslov}"/>
-        
-        <Label          Content="Ime i Prezime" Style="{StaticResource obicna_labela}" Margin="79,129,0,0"/>
-        <TextBox        Name="txtbx_ime" HorizontalAlignment="Left" Height="23" Margin="270,174,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        
-        <Label          Content="Pol" Style="{StaticResource obicna_labela}" Margin="79,240,0,0"/>
-        <RadioButton    Name="rdbttn_musko" Content="Muško" HorizontalAlignment="Left" Margin="270,240,0,0" VerticalAlignment="Top"/>
-        <RadioButton    Name="rdbttn_zensko" Content="Žensko" HorizontalAlignment="Left" Margin="384,243,0,0" VerticalAlignment="Top"/>
-        
-        <Label          Content="Adresa Stanovanja" Style="{StaticResource obicna_labela}" Margin="79,188,0,0"/>
-        <TextBox        Name="txtbx_adresa" HorizontalAlignment="Left" Height="23" Margin="270,304,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="50"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="100"/>
+            </Grid.RowDefinitions>
 
-        <Label          Content="E-mail" Style="{StaticResource obicna_labela}" Margin="282,393,0,0"/>
-        <TextBox        Name="txtbx_email" HorizontalAlignment="Left" Height="23" Margin="270,304,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <TextBlock  Grid.Row="1" Text="Registracija" Style="{StaticResource naslov}"/>
 
-        <Label          Content="Korisničko Ime" Style="{StaticResource obicna_labela}" Margin="79,292,0,0"/>
-        <TextBox        Name="txtbx_kor_ime" Style="{StaticResource korisnicko_ime}" Margin="270,129,0,0"/>
-        
-        <Label          Content="Lozinka" Style="{StaticResource obicna_labela}" Margin="79,357,0,0"/>
-        <PasswordBox    Name="psswrdbx_lozinka" Style="{StaticResource lozinka}" Margin="292,304,0,0"/>
-        <TextBox        Name="txtbx_lozinka" Style="{StaticResource lozinka_tb}" Margin="270,365,0,0"/>
-        <Button         Name="bttn_vidljivost" Style="{StaticResource dugme_vidljivost_stl}" Template="{StaticResource dugme_vidljivost_tmplt}" Margin="426,436,0,0"/>
+            <StackPanel     Grid.Row="2" Orientation="Vertical">
+                <Label      Content="Ime i Prezime" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                <TextBox    Name="txtbx_ime" TextChanged="Txtbx_ime_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}"/>
+                <TextBlock  Name="txtblck_ime_val" Style="{StaticResource validacija}" Width="{StaticResource sirina_2}"/>
+                <!--mora imati razmak (whitespace)-->
+            </StackPanel>
 
-        <Label          Content="Lozinka (Ponovite)" Style="{StaticResource obicna_labela}" Margin="79,432,0,0"/>
-        <PasswordBox    Name="psswrdbx_lozinka_2" Style="{StaticResource lozinka}" Margin="426,357,0,0"/>
-        <TextBox        Name="txtbx_lozinka_2" Style="{StaticResource lozinka_tb}" Margin="270,436,0,0"/>
-        <Button         Name="bttn_vidljivost_2" Style="{StaticResource dugme_vidljivost_stl}" Template="{StaticResource dugme_vidljivost_tmplt}" Margin="426,436,0,0"/>
+            <StackPanel             Grid.Row="3" Orientation="Vertical">
+                <Label              Content="Pol" Style="{StaticResource labela}" Width="{StaticResource sirina_2}" HorizontalAlignment="Center"/>
+                <StackPanel         Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton    Name="rdbttn_musko" Content="Muško" GroupName="pol" Margin="20,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <RadioButton    Name="rdbttn_zensko" Content="Žensko" GroupName="pol" Margin="20,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
+                </StackPanel>
+            </StackPanel>
 
-        <Label          Content="Label" HorizontalAlignment="Left" Margin="271,327,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label          Content="Label" HorizontalAlignment="Left" Margin="282,464,0,0" VerticalAlignment="Top"/>
-        <Button         Name="bttn_odustani" Content="Odustani" Click="Bttn_odustani_Click" Style="{StaticResource dugme}" Width="75" Margin="249,526,0,0"/>
-    </Grid>
+            <Border                     Grid.Row="4" BorderThickness="5" Padding="0,0,0,10" Margin="10">
+                <Border.BorderBrush>
+                    <SolidColorBrush    Color="Blue" Opacity="0.1"/>
+                </Border.BorderBrush>
+                <StackPanel             Orientation="Vertical" >
+                    <Label              Content="Adresa Stanovanja:" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                    <Label              Content="   Ulica i broj" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                    <TextBox            Name="txtbx_ulica" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}"/>
+                    <Label              Content="   Mesto" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                    <TextBox            Name="txtbx_mesto" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}"/>
+                    <Label              Content="   Poštanski broj" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                    <TextBox            Name="txtbx_postanski_br" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}" MaxLength="5"/>
+                    <!--75 karaktera-->
+                </StackPanel>
+            </Border>
+
+            <StackPanel     Grid.Row="5" Orientation="Vertical">
+                <Label      Content="E-mail" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                <TextBox    Name="txtbx_email" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}"/>
+                <TextBlock  Name="txtblck_email_val" Style="{StaticResource validacija}"/>
+                <!--40 karaktera max 5 min _%@_%._% regex-->
+            </StackPanel>
+
+            <StackPanel     Grid.Row="6" Orientation="Vertical">
+                <Label      Content="Korisničko Ime" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                <TextBox    Name="txtbx_kor_ime" TextChanged="Txtbx_kor_ime_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_2}"/>
+                <TextBlock  Name="txtblck_kor_ime_val" Style="{StaticResource val_kor_ime_loz}"/>
+                <!--min 8 karaktera max 15 slova, brojevi, tacka ili donja_crta-->
+            </StackPanel>
+
+            <StackPanel         Grid.Row="7" Orientation="Vertical">
+                <Label          Content="Lozinka" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <PasswordBox    Name="psswrdbx_lozinka" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Template="{DynamicResource tmplt_psswrdbx}" Width="{StaticResource sirina_2_loz}"/>
+                    <TextBox        Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="0" IsTabStop="False"/>
+                    <Button         Name="bttn_vidljivost" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost}" Template="{StaticResource tmplt_dugme_vidljivost}"/>
+                </StackPanel>
+                <TextBlock      Name="txtblck_loz_val" Style="{StaticResource val_kor_ime_loz}"/>
+                <!--min 8 karaktera max 15 slova, brojevi, tacka ili donja_crta-->
+            </StackPanel>
+
+            <StackPanel         Grid.Row="8" Orientation="Vertical">
+                <Label          Content="Lozinka (Ponovite)" Style="{StaticResource labela}" Width="{StaticResource sirina_2}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <PasswordBox    Name="psswrdbx_lozinka_2" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Template="{DynamicResource tmplt_psswrdbx}" Width="{StaticResource sirina_2_loz}"/>
+                    <TextBox        Name="txtbx_lozinka_2" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="0" IsTabStop="False"/>
+                    <Button         Name="bttn_vidljivost_2" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost}" Template="{StaticResource tmplt_dugme_vidljivost}"/>
+                </StackPanel>
+                <TextBlock      Name="txtblck_loz_val_2" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina_2}"/>
+                <!--min 8 karaktera max 15 slova, brojevi, tacka ili donja_crta-->
+            </StackPanel>
+
+            <StackPanel         Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button         Name="bttn_odustani" Content="Odustani" Click="Bttn_odustani_Click" Margin="0,0,10,0" Style="{StaticResource dugme}" Width="100" />
+                <Button         Name="bttn_potvrdi" Content="Potvrdi" Margin="10,0,0,0" Style="{StaticResource dugme}" Width="100" IsEnabled="False"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>

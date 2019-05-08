@@ -1,4 +1,4 @@
-//kad nece da se uloguje treba pokrenuti MSSQLSERVER servis
+--kad nece da se uloguje treba pokrenuti MSSQLSERVER servis
 
 drop table karta
 drop table zauzetost_sedista

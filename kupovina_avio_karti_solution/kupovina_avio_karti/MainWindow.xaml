@@ -5,23 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kupovina_avio_karti"
         mc:Ignorable="d"
-        Title="Kupovina avio karti" Height="500" Width="521" ResizeMode="NoResize" Style="{StaticResource prozor}">
-    
+        Title="Kupovina avio karti" Height="auto" Width="auto" Style="{StaticResource prozor}" MinWidth="350" MinHeight="500">
+
     <Grid>
-        <TextBlock Text="Prijavi se" Style="{StaticResource naslov}"/>
-        
-        <Label          Content="Korisničko Ime" Style="{StaticResource obicna_labela}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu." Margin="120,114,0,0"/>
-        <TextBox        x:Name="txtbx_kor_ime" TextChanged="Txtbx_kor_ime_TextChanged" Style="{StaticResource korisnicko_ime}" Margin="120,142,0,0" Template="{DynamicResource TextBoxControlTemplate1}"/>
-        <Label          x:Name="lbl_kor_ime_val" Style="{StaticResource validacija}" Margin="207,183,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Label          Content="Lozinka" Style="{StaticResource obicna_labela}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu." Margin="120,199,0,0"/>
-        <PasswordBox    x:Name="psswrdbx_lozinka" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Margin="120,227,0,0" Template="{DynamicResource PasswordBoxControlTemplate1}"/>
-        <TextBox        x:Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource lozinka_tb}" Template="{DynamicResource TextBoxControlTemplate1}" Margin="120,227,0,0"/>
-        <Button         x:Name="bttn_vidljivost" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost_stl}" Template="{DynamicResource dugme_vidljivost_tmplt}" Margin="357,227,0,0"/>
-        <Label          x:Name="lbl_loz_val" Style="{StaticResource validacija}" Margin="207,268,0,0"/>
+        <TextBlock          Grid.Row="1" Text="Prijavi se" Margin="0,0,0,15" Style="{StaticResource naslov}"/>
 
-        <Button         x:Name="bttn_reg" Content="Registracija" Click="Bttn_reg_click" Style="{StaticResource dugme}" Margin="120,319,0,0" Width="126" ToolTip="Za neregistrovane korisnike."/>
-        <Button         x:Name="bttn_potvrdi" Content="Potvrdi" Click="Bttn_potvrdi_Click" Style="{StaticResource dugme}" Margin="272,319,0,0" Width="126" ToolTip="Za registrovane korisnike." IsEnabled="False" IsDefault="True"/>
-        <Button         x:Name="bttn_preskoci" Content="Preskoči" Style="{StaticResource dugme}" Margin="120,362,0,0" Width="278" ToolTip="Kupovina karata bez logovanja i registracije"/>
+        <StackPanel         Grid.Row="2" Orientation="Vertical">
+            <Label          Content="Korisničko Ime" Style="{StaticResource labela}" Width="{StaticResource sirina_1}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu."/>
+            <TextBox        x:Name="txtbx_kor_ime" TextChanged="Txtbx_kor_ime_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_1}"/>
+            <TextBlock      x:Name="txtblck_kor_ime_val" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina_1}"/>
+        </StackPanel>
+
+        <StackPanel             Grid.Row="3" Orientation="Vertical">
+            <Label              Content="Lozinka" Style="{StaticResource labela}" Width="{StaticResource sirina_1}" ToolTip="Kombinacija 8 karaktera.  Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu."/>
+            <StackPanel         Orientation="Horizontal" HorizontalAlignment="Center">
+                <PasswordBox    x:Name="psswrdbx_lozinka" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Template="{DynamicResource tmplt_psswrdbx}" Width="{StaticResource sirina_1_loz}"/>
+                <TextBox        x:Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="0" IsTabStop="False"/>
+                <Button         x:Name="bttn_vidljivost" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost}" Template="{DynamicResource tmplt_dugme_vidljivost}"/>
+            </StackPanel>
+            <TextBlock          x:Name="txtblck_loz_val" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina_1}" Margin="0,0,0,10"/>
+        </StackPanel>
+
+        <StackPanel         Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button         x:Name="bttn_reg" Content="Registracija" Click="Bttn_reg_click" Style="{StaticResource dugme}" Width="126" Margin="0,0,13,0" ToolTip="Za neregistrovane korisnike." Template="{DynamicResource tmplt_dugme}"/>
+            <Button         x:Name="bttn_potvrdi" Content="Potvrdi" Click="Bttn_potvrdi_Click" Style="{StaticResource dugme}" Width="126" Margin="13,0,0,0" ToolTip="Za registrovane korisnike." IsEnabled="False" IsDefault="True" Template="{DynamicResource tmplt_dugme}"/>
+        </StackPanel>
+
+        <StackPanel         Grid.Row="5" Orientation="Vertical">
+            <Button         x:Name="bttn_preskoci" Content="Preskoči" Click="Bttn_preskoci_Click" Style="{StaticResource dugme}" Width="{StaticResource sirina_1}" Margin="0,26,0,0" ToolTip="Kupovina karata bez logovanja i registracije" Template="{DynamicResource tmplt_dugme}"/>
+        </StackPanel>
     </Grid>
 </Window>
