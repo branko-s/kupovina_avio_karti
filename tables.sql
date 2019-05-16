@@ -15,7 +15,7 @@ create table korisnik
 	pass				varchar(15)		not null		unique,
 	email				varchar(40)		not null		unique check(email like '%_@___%'),
 	ime_prezime			nvarchar(40)	not null		,
-	adresa				nvarchar(50)	not null		,
+	adresa				nvarchar(75)	not null		,
 	pol					char(1)							check(pol in ('m','z')), --nije obavezno za unosenje
 	tip					char(1)			not null		check(tip in ('u','a'))  --u user, a admin
 )

@@ -21,11 +21,26 @@ namespace kupovina_avio_karti
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool val_kor_ime = false, val_loz = false;
-
+        private bool val_kor_ime, val_loz;
+        
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public static void Povratna_info_kor_ime_loz(TextBlock txtblck, bool duzina)
+        {
+            if (duzina) txtblck.Visibility = Visibility.Hidden;
+            else
+            {
+                txtblck.Text = (string) App.Current.Resources["val_string_duzina"];
+                txtblck.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Aktivacija_dugmeta_potvrdi()
+        {
+            App.Aktivacija_dugmeta_potvrdi(bttn_potvrdi, val_kor_ime, val_loz);
         }
 
         private void Bttn_reg_click(object sender, RoutedEventArgs e)
@@ -41,7 +56,7 @@ namespace kupovina_avio_karti
 
         private void Bttn_potvrdi_Click(object sender, RoutedEventArgs e)
         {
-            //validacija iz baze podataka.
+            //fhsgjkdhkj
         }
 
         private void Bttn_preskoci_Click(object sender, RoutedEventArgs e)
@@ -51,48 +66,46 @@ namespace kupovina_avio_karti
 
         private void Txtbx_kor_ime_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtbx_kor_ime.Text.Length < 8)
-            {
-                txtblck_kor_ime_val.Visibility = Visibility.Visible;
-                val_kor_ime = false;
-                txtbx_kor_ime.BorderBrush = (Brush)Application.Current.Resources["crvena"];
-            }
-            else
-            {
-                txtblck_kor_ime_val.Visibility = Visibility.Hidden;
-                val_kor_ime = true;
-                txtbx_kor_ime.BorderBrush = (Brush) Application.Current.Resources["zelena"];
-            }
+            Farba f;
 
-            if ((val_kor_ime == true) && (val_loz == true)) bttn_potvrdi.IsEnabled = true;
-            else bttn_potvrdi.IsEnabled = false;
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_kor_ime_loz"]);
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine
+            };
+
+            val_kor_ime = true;
+            foreach (bool val in validacija) val_kor_ime &= val;
+
+            if (val_kor_ime) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje(txtbx_kor_ime, f);
+            Povratna_info_kor_ime_loz(txtblck_kor_ime_val, validacija_duzine);
+            Aktivacija_dugmeta_potvrdi();
         }
 
         private void Psswrdbx_lozinka_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (psswrdbx_lozinka.Password.Length < 8)
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int) Application.Current.Resources["min_br_kar_kor_ime_loz"]);
+
+            List<bool> validacija = new List<bool>()
             {
-                val_loz = false;
+                validacija_duzine
+            };
 
-                txtblck_loz_val.Visibility = Visibility.Visible;
-                psswrdbx_lozinka.BorderBrush = (Brush)Application.Current.Resources["crvena"];
-                txtbx_lozinka.BorderBrush = (Brush)Application.Current.Resources["crvena"];
-                bttn_vidljivost.BorderBrush = (Brush)Application.Current.Resources["crvena"];
-                bttn_vidljivost.Background = (ImageBrush)Application.Current.Resources["crveno_oko"];
-            }
-            else
-            {
-                val_loz = true;
+            val_loz = true;
+            foreach (bool val in validacija) val_loz &= val;
 
-                txtblck_loz_val.Visibility = Visibility.Hidden;
-                psswrdbx_lozinka.BorderBrush = (Brush)Application.Current.Resources["zelena"];
-                txtbx_lozinka.BorderBrush = (Brush)Application.Current.Resources["zelena"];
-                bttn_vidljivost.BorderBrush = (Brush)Application.Current.Resources["zelena"];
-                bttn_vidljivost.Background = (ImageBrush)Application.Current.Resources["zeleno_oko"];
-            }
-
-            if ((val_kor_ime == true) && (val_loz == true)) bttn_potvrdi.IsEnabled = true;
-            else bttn_potvrdi.IsEnabled = false;
+            if (val_loz) f = Farba.zelena;
+            else f = Farba.crvena;
+            
+            App.Farbanje(psswrdbx_lozinka, txtbx_lozinka, bttn_vidljivost, f);
+            Povratna_info_kor_ime_loz(txtblck_loz_val, validacija_duzine);
+            Aktivacija_dugmeta_potvrdi();
         }
 
         private void Txtbx_lozinka_TextChanged(object sender, TextChangedEventArgs e)
@@ -107,7 +120,7 @@ namespace kupovina_avio_karti
                 psswrdbx_lozinka.Width = 0;
                 psswrdbx_lozinka.IsTabStop = false;
 
-                txtbx_lozinka.Width = (double)Application.Current.Resources["sirina_1_loz"];
+                txtbx_lozinka.Width = (double) this.Resources["sirina_loz"];
                 txtbx_lozinka.IsTabStop = true;
 
                 txtbx_lozinka.Text = psswrdbx_lozinka.Password;
@@ -119,14 +132,12 @@ namespace kupovina_avio_karti
                 txtbx_lozinka.Width = 0;
                 txtbx_lozinka.IsTabStop = false;
 
-                psswrdbx_lozinka.Width = (double)Application.Current.Resources["sirina_1_loz"];
+                psswrdbx_lozinka.Width = (double) this.Resources["sirina_loz"];
                 psswrdbx_lozinka.IsTabStop = true;
 
                 psswrdbx_lozinka.Focus();
 
-                // "hack"
-                InputManager.Current.ProcessInput(new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.End){RoutedEvent = Keyboard.KeyDownEvent});
-                // nakon promene lozinke sa vidljivo na nevidljivo, sa txtbx na psswrdbx simulira unos tipke "End" kako bi kursor postavio na kraj.
+                App.Postavi_kursor_na_kraj();
             }
         }
     }

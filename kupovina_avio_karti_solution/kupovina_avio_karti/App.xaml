@@ -1,13 +1,35 @@
-﻿    <!-- š đ ž č ć  Š Đ Ž Č Ć-->
-    
-    <Application x:Class="kupovina_avio_karti.App"
+﻿<!--
+    š đ ž č ć  Š Đ Ž Č Ć
+    username			varchar(15)		primary key		,
+	pass				varchar(15)		not null		unique,
+	email				varchar(40)		not null		unique check(email like '%_@___%'),
+	ime_prezime			nvarchar(40)	not null		,
+	adresa				nvarchar(75)	not null		,
+	pol					char(1)							check(pol in ('m','z')), nije obavezno za unosenje
+	tip					char(1)			not null		check(tip in ('u','a'))  u user, a admin
+)-->
+
+<Application x:Class="kupovina_avio_karti.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:kupovina_avio_karti"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
-    
+
     <Application.Resources>
+
+        <sys:Double x:Key="visina_box">40</sys:Double>
+
+        <sys:Int32 x:Key="min_br_kar_kor_ime_loz"> 8 </sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_ime"> 3 </sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_ulica"> 3 </sys:Int32>
+
+        <sys:String x:Key="val_string_duzina">Broj karaktera mora biti veći od 7.</sys:String>
+        <sys:String x:Key="val_string_sadrzaj">Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu.</sys:String>
+        <sys:String x:Key="val_string_zauzetost_kor_ime">Korisničko ime je zauzeto.</sys:String>
+        <sys:String x:Key="val_string_zauzetost_loz">Lozinka je zauzeta.</sys:String>
+
+        <sys:String x:Key="string_tooltip_kor_ime_loz">Kombinacija 8 karaktera. Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu.</sys:String>
 
         <ImageBrush x:Key="crveno_oko" ImageSource="img/crveno_oko.png" Stretch="UniformToFill"/>
         <ImageBrush x:Key="zeleno_oko" ImageSource="img/zeleno_oko.png" Stretch="UniformToFill"/>
@@ -16,11 +38,6 @@
         <SolidColorBrush x:Key="crvena" Color="Red"/>
         <SolidColorBrush x:Key="plava" Color="Blue"/>
         <SolidColorBrush x:Key="ivica_prozora" Color="Black"/>
-
-        <sys:Double x:Key="sirina_1">278</sys:Double>
-        <sys:Double x:Key="sirina_1_loz">237</sys:Double>
-        <sys:Double x:Key="sirina_2">500</sys:Double>
-        <sys:Double x:Key="sirina_2_loz">459</sys:Double>
 
         <Style x:Key="prozor" TargetType="Window">
             <Setter Property="Background">
@@ -40,53 +57,58 @@
             <Setter Property="Height" Value="80"/>
             <Setter Property="FontSize" Value="60"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="labela" TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="28"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="txtbx" TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="41"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="{StaticResource visina_box}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="BorderBrush" Value="{StaticResource crvena}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         </Style>
 
         <Style x:Key="txtbx_kor_ime_loz" BasedOn="{StaticResource txtbx}" TargetType="TextBox">
-            <Setter Property="ToolTip" Value="Kombinacija 8 karaktera. Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu."/>
+            <Setter Property="ToolTip" Value="{StaticResource string_tooltip_kor_ime_loz}"/>
             <Setter Property="MaxLength" Value="15"/>
         </Style>
 
         <Style x:Key="lozinka" TargetType="PasswordBox">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="41"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="{StaticResource visina_box}"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="ToolTip" Value="Kombinacija 8 karaktera. Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu."/>
+            <Setter Property="ToolTip" Value="{StaticResource string_tooltip_kor_ime_loz}"/>
             <Setter Property="MaxLength" Value="15"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="BorderBrush" Value="{StaticResource crvena}"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         </Style>
 
         <Style x:Key="validacija" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{StaticResource crvena}"/>
             <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
 
         <Style x:Key="val_kor_ime_loz" TargetType="TextBlock" BasedOn="{StaticResource validacija}">
@@ -95,9 +117,9 @@
 
         <Style x:Key="dugme_vidljivost" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="41"/>
-            <Setter Property="Height" Value="41"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="{StaticResource visina_box}"/>
+            <Setter Property="Height" Value="{StaticResource visina_box}"/>
             <Setter Property="ToolTip" Value="Prikazi/Sakrij lozinku"/>
             <Setter Property="BorderThickness" Value="0,2,2,2"/>
             <Setter Property="BorderBrush" Value="{StaticResource crvena}"/>
@@ -106,18 +128,22 @@
                     <ImageBrush Stretch="UniformToFill" ImageSource="img/crveno_oko.png"/>
                 </Setter.Value>
             </Setter>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         </Style>
 
         <Style x:Key="dugme" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="33"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Margin" Value="5,0"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="BorderBrush" Value="{StaticResource plava}"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         </Style>
 
         <ControlTemplate x:Key="tmplt_txtbx" TargetType="{x:Type TextBox}">
@@ -168,7 +194,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
         <ControlTemplate x:Key="tmplt_dugme" TargetType="{x:Type Button}">
             <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -179,7 +205,8 @@
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>-->
+                    <Setter Property="Cursor" Value="Hand"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
@@ -193,6 +220,60 @@
                     <!--<Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>-->
                     <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource crvena}"/>
                     <!--<Setter Property="Foreground" Value="#FF838383"/>-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+        <ControlTemplate x:Key="tmplt_rdbttn" TargetType="{x:Type RadioButton}">
+            <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="radioButtonBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1,1,2,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <Grid x:Name="markGrid" Margin="2">
+                        <Ellipse x:Name="optionMark" Fill="{StaticResource zelena}" MinWidth="10" MinHeight="10" Opacity="0"/>
+                    </Grid>
+                </Border>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasContent" Value="True">
+                    <Setter Property="FocusVisualStyle">
+                        <Setter.Value>
+                            <Style>
+                                <Setter Property="Control.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="4,-1,0,0"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="radioButtonBorder" Value="#FFF3F9FF"/>
+                    <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="#FF5593FF"/>
+                    <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource zelena}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="radioButtonBorder" Value="#FFE6E6E6"/>
+                    <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="#FFBCBCBC"/>
+                    <Setter Property="Fill" TargetName="optionMark" Value="#FF707070"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="radioButtonBorder" Value="#FFD9ECFF"/>
+                    <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="#FF3C77DD"/>
+                    <Setter Property="Fill" TargetName="optionMark" Value="Green"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="{x:Null}">
+                    <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
