@@ -23,6 +23,10 @@
         <sys:Int32 x:Key="min_br_kar_kor_ime_loz"> 8 </sys:Int32>
         <sys:Int32 x:Key="min_br_kar_ime"> 3 </sys:Int32>
         <sys:Int32 x:Key="min_br_kar_ulica"> 3 </sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_broj">1</sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_grad">2</sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_pos_br">5</sys:Int32>
+        <sys:Int32 x:Key="min_br_kar_email">5</sys:Int32>
 
         <sys:String x:Key="val_string_duzina">Broj karaktera mora biti veći od 7.</sys:String>
         <sys:String x:Key="val_string_sadrzaj">Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu.</sys:String>

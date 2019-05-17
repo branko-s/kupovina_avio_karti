@@ -92,19 +92,19 @@
                         <ColumnDefinition       Width="{StaticResource sirina_4_grid}"/>
                     </Grid.ColumnDefinitions>
                     <Label                      Grid.Row="0" Grid.Column="0" Content="Ulica" Style="{StaticResource labela}" Width="{StaticResource sirina_3}"/>
-                    <TextBox                    Grid.Row="1" Grid.Column="0" Name="txtbx_ulica" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_3}"/>
+                    <TextBox                    Grid.Row="1" Grid.Column="0" Name="txtbx_ulica" TextChanged="Txtbx_ulica_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_3}"/>
                     <Label                      Grid.Row="0" Grid.Column="2" Content="Broj" Style="{StaticResource labela}" Width="{StaticResource sirina_4}"/>
-                    <TextBox                    Grid.Row="1" Grid.Column="2" Name="txtbx_broj" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_4}" MaxLength="4"/>
+                    <TextBox                    Grid.Row="1" Grid.Column="2" Name="txtbx_broj" TextChanged="Txtbx_broj_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_4}" MaxLength="4"/>
                     <Label                      Grid.Row="2" Grid.Column="0" Content="Grad" Style="{StaticResource labela}" Width="{StaticResource sirina_3}"/>
-                    <TextBox                    Grid.Row="3" Grid.Column="0" Name="txtbx_grad" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_3}"/>
+                    <TextBox                    Grid.Row="3" Grid.Column="0" Name="txtbx_grad" TextChanged="Txtbx_grad_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_3}"/>
                     <Label                      Grid.Row="2" Grid.Column="2" Content="Poš. Broj" Style="{StaticResource labela}" Width="{StaticResource sirina_4}"/>
-                    <TextBox                    Grid.Row="3" Grid.Column="2" Name="txtbx_postanski_br" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_4}" MaxLength="5"/>
+                    <TextBox                    Grid.Row="3" Grid.Column="2" Name="txtbx_postanski_br" TextChanged="Txtbx_postanski_br_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina_4}" MaxLength="5"/>
                 </Grid>
             </Border>
 
             <StackPanel     Grid.Row="9" Orientation="Vertical">
                 <Label      Content="E-mail" Style="{StaticResource labela}" Width="{StaticResource sirina}"/>
-                <TextBox    Name="txtbx_email" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina}"/>
+                <TextBox    Name="txtbx_email" TextChanged="Txtbx_email_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina}"/>
                 <TextBlock  Name="txtblck_email_val" Style="{StaticResource validacija}"/>
             </StackPanel>
 
