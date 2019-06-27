@@ -30,13 +30,14 @@
 
         <sys:String x:Key="val_string_duzina">Broj karaktera mora biti veći od 7.</sys:String>
         <sys:String x:Key="val_string_sadrzaj">Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu.</sys:String>
-        <sys:String x:Key="val_string_zauzetost_kor_ime">Korisničko ime je zauzeto.</sys:String>
-        <sys:String x:Key="val_string_zauzetost_loz">Lozinka je zauzeta.</sys:String>
 
         <sys:String x:Key="string_tooltip_kor_ime_loz">Kombinacija 8 karaktera. Mora da sadrži minimum jedno slovo (veliko ili malo), minimum jedan broj i tačku ili donju crtu.</sys:String>
 
         <ImageBrush x:Key="crveno_oko" ImageSource="img/crveno_oko.png" Stretch="UniformToFill"/>
         <ImageBrush x:Key="zeleno_oko" ImageSource="img/zeleno_oko.png" Stretch="UniformToFill"/>
+
+        <DropShadowEffect x:Key="efekat_osvetljenje" BlurRadius="5" Color="White" RenderingBias="Quality" ShadowDepth="3" Opacity=".5"/>
+        <DropShadowEffect x:Key="efekat_senka" BlurRadius="5" Color="Black" RenderingBias="Quality" ShadowDepth="3" Opacity=".5"/>
 
         <SolidColorBrush x:Key="zelena" Color="LightGreen"/>
         <SolidColorBrush x:Key="crvena" Color="Red"/>
@@ -46,7 +47,7 @@
         <Style x:Key="prozor" TargetType="Window">
             <Setter Property="Background">
                 <Setter.Value>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="img/oblaci.jpg"/>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="img/pozadina.jpg"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Icon" Value="img/ikona.jpg"/>
@@ -63,6 +64,7 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_osvetljenje}"/>
         </Style>
 
         <Style x:Key="labela" TargetType="Label">
@@ -71,6 +73,7 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_osvetljenje}"/>
         </Style>
 
         <Style x:Key="txtbx" TargetType="TextBox">
@@ -84,6 +87,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_senka}"/>
         </Style>
 
         <Style x:Key="txtbx_kor_ime_loz" BasedOn="{StaticResource txtbx}" TargetType="TextBox">
@@ -103,6 +107,8 @@
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Padding" Value="44,0,0,0"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_senka}"/>
         </Style>
 
         <Style x:Key="validacija" TargetType="TextBlock">
@@ -113,6 +119,7 @@
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_senka}"/>
         </Style>
 
         <Style x:Key="val_kor_ime_loz" TargetType="TextBlock" BasedOn="{StaticResource validacija}">
@@ -133,6 +140,7 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_senka}"/>
         </Style>
 
         <Style x:Key="dugme" TargetType="Button">
@@ -148,10 +156,32 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="5,0"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Effect" Value="{StaticResource efekat_senka}"/>
+        </Style>
+
+        <Style x:Key="rdbttn" TargetType="RadioButton">
+            <Setter Property="Effect" Value="{StaticResource efekat_osvetljenje}"/>
         </Style>
 
         <ControlTemplate x:Key="tmplt_txtbx" TargetType="{x:Type TextBox}">
-            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Border x:Name="border" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>-->
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="tmplt_txtbx_loz" TargetType="{x:Type TextBox}">
+            <Border x:Name="border" CornerRadius="5,0,0,5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -168,7 +198,7 @@
         </ControlTemplate>
 
         <ControlTemplate x:Key="tmplt_psswrdbx" TargetType="{x:Type PasswordBox}">
-            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Border x:Name="border" CornerRadius="5,0,0,5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -186,7 +216,7 @@
 
 
         <ControlTemplate x:Key="tmplt_dugme_vidljivost" TargetType="{x:Type Button}">
-            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Border x:Name="border" CornerRadius="0,5,5,0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -199,8 +229,8 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-        <ControlTemplate x:Key="tmplt_dugme" TargetType="{x:Type Button}">
-            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+        <ControlTemplate x:Key="tmplt_dugme_levo" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"  CornerRadius="5,0,0,5" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -227,7 +257,65 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
+        <ControlTemplate x:Key="tmplt_dugme_centar" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"  CornerRadius="0" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>-->
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>-->
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <!--<Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource crvena}"/>
+                    <!--<Setter Property="Foreground" Value="#FF838383"/>-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="tmplt_dugme_desno" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"  CornerRadius="0,5,5,0" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>-->
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <!--<Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>-->
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <!--<Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource crvena}"/>
+                    <!--<Setter Property="Foreground" Value="#FF838383"/>-->
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
         <ControlTemplate x:Key="tmplt_rdbttn" TargetType="{x:Type RadioButton}">
             <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
                 <Grid.ColumnDefinitions>

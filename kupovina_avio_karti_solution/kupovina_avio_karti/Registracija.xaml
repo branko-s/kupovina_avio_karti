@@ -105,7 +105,7 @@
             <StackPanel     Grid.Row="9" Orientation="Vertical">
                 <Label      Content="E-mail" Style="{StaticResource labela}" Width="{StaticResource sirina}"/>
                 <TextBox    Name="txtbx_email" TextChanged="Txtbx_email_TextChanged" Style="{StaticResource txtbx}" Template="{DynamicResource tmplt_txtbx}" Width="{StaticResource sirina}"/>
-                <TextBlock  Name="txtblck_email_val" Style="{StaticResource validacija}"/>
+                <TextBlock  Name="txtblck_email_val" Style="{StaticResource validacija}" Width="{StaticResource sirina}"/>
             </StackPanel>
 
             <StackPanel     Grid.Row="11" Orientation="Vertical">
@@ -124,7 +124,7 @@
                         <Label              Content="Lozinka" Style="{StaticResource labela}" Width="{StaticResource sirina}"/>
                         <StackPanel         Orientation="Horizontal" HorizontalAlignment="Center">
                             <PasswordBox    Name="psswrdbx_lozinka" GotKeyboardFocus="Psswrdbx_lozinka_GotKeyboardFocus" PasswordChanged="Psswrdbx_lozinka_PasswordChanged" Style="{StaticResource lozinka}" Template="{DynamicResource tmplt_psswrdbx}" Width="{StaticResource sirina_loz}"/>
-                            <TextBox        Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="0" IsTabStop="False"/>
+                            <TextBox        Name="txtbx_lozinka" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx_loz}" Width="0" IsTabStop="False" Padding="44,0,0,0"/>
                             <Button         Name="bttn_vidljivost" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost}" Template="{StaticResource tmplt_dugme_vidljivost}"/>
                         </StackPanel>
                         <TextBlock          Name="txtblck_loz_val" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina}"/>
@@ -134,17 +134,17 @@
                         <Label              Content="Lozinka (Ponovite)" Style="{StaticResource labela}" Width="{StaticResource sirina}"/>
                         <StackPanel         Orientation="Horizontal" HorizontalAlignment="Center">
                             <PasswordBox    Name="psswrdbx_lozinka_2" IsEnabled="False" GotKeyboardFocus="Psswrdbx_lozinka_GotKeyboardFocus" PasswordChanged="Psswrdbx_lozinka_2_PasswordChanged" Style="{StaticResource lozinka}" Template="{DynamicResource tmplt_psswrdbx}" Width="{StaticResource sirina_loz}"/>
-                            <TextBox        Name="txtbx_lozinka_2" IsEnabled="False" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx}" Width="0" IsTabStop="False"/>
+                            <TextBox        Name="txtbx_lozinka_2" IsEnabled="False" TextChanged="Txtbx_lozinka_TextChanged" Style="{StaticResource txtbx_kor_ime_loz}" Template="{DynamicResource tmplt_txtbx_loz}" Width="0" IsTabStop="False" Padding="44,0,0,0"/>
                             <Button         Name="bttn_vidljivost_2" IsEnabled="False" Click="Bttn_vidljivost_Click" Style="{StaticResource dugme_vidljivost}" Template="{StaticResource tmplt_dugme_vidljivost}"/>
                         </StackPanel>
-                        <TextBlock          Name="txtblck_loz_val_2" Text="Lozinke se ne poklapaju." Visibility="Hidden" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina}"/>
+                        <TextBlock          Name="txtblck_loz_val_2" Text="" Style="{StaticResource val_kor_ime_loz}" Width="{StaticResource sirina}"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <StackPanel         Grid.Row="15" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button         Name="bttn_odustani" Content="Odustani" Click="Bttn_odustani_Click" Style="{StaticResource dugme}" Template="{DynamicResource tmplt_dugme}"/>
-                <Button         Name="bttn_potvrdi" Content="Potvrdi" Style="{StaticResource dugme}" Template="{DynamicResource tmplt_dugme}" IsEnabled="False"/>
+                <Button         Name="bttn_odustani" Content="Odustani" Click="Bttn_odustani_Click" Style="{StaticResource dugme}" Template="{DynamicResource tmplt_dugme_levo}"/>
+                <Button         Name="bttn_potvrdi" Content="Potvrdi" Click="Bttn_potvrdi_Click" Style="{StaticResource dugme}" Template="{DynamicResource tmplt_dugme_desno}" IsEnabled="False"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

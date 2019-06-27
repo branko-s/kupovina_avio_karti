@@ -19,42 +19,37 @@ namespace kupovina_avio_karti
     /// </summary>
     public partial class Registracija : Window
     {
-        //postavljeno na true dok se ne postavi validacija.
-        private bool val_ime, val_pol, val_adr=true, val_mesto=true, val_postanski_br=true, val_kor_ime, val_loz, val_loz_2;
+        private bool val_ime, val_pol, val_ulica, val_broj, val_grad, val_pos_br, val_email, val_kor_ime, val_loz, val_loz_2;
 
         public Registracija()
         {
             InitializeComponent();
         }
 
-        private void Povratna_info_kor_ime_loz(object obj, TextBlock txtblck, bool duzina, bool sadrzaj, bool baza_pod)
+        private string Povratna_info(bool email_duzina, bool email_sadrzaj, bool email_baza_pod) //za email
+        {
+            if (txtbx_email.Text.Length == 0) return "";
+            else if (!email_baza_pod || !email_duzina) return "E-mail nije u zeljenom formatu.";
+            else if (!email_baza_pod) return "E-mail je vec registrovan u bazi podataka.";
+            else return "";
+        }
+
+        private string Povratna_info(object obj, bool duzina, bool sadrzaj, bool baza_pod) // za kor_ime i loz
         {
             string val_string_baza_pod;
 
-            if (obj is TextBox) val_string_baza_pod = (string)App.Current.Resources["val_string_kor_ime"];
-            else val_string_baza_pod = (string)App.Current.Resources["val_string_loz"];
+            if (obj is TextBox) val_string_baza_pod = "Korisničko ime je zauzeto.";
+            else val_string_baza_pod = "Lozinka je zauzeta.";
 
-            if (!duzina)
-            {
-                txtblck.Text = (string)App.Current.Resources["val_string_duzina"];
-                txtblck.Visibility = Visibility.Visible;
-            }
-            else if (!sadrzaj)
-            {
-                txtblck.Text = (string)App.Current.Resources["val_string_sadrzaj"];
-                txtblck.Visibility = Visibility.Visible;
-            }
-            else if (!baza_pod)
-            {
-                txtblck.Text = (string)App.Current.Resources[val_string_baza_pod];
-                txtblck.Visibility = Visibility.Visible;
-            }
-            else txtblck.Visibility = Visibility.Hidden;
+            if (!duzina) return (string) App.Current.Resources["val_string_duzina"];
+            else if (!sadrzaj) return (string)App.Current.Resources["val_string_sadrzaj"];
+            else if (!baza_pod) return val_string_baza_pod;
+            else return "";
         }
 
         private void Aktivacija_dugmeta_potvrdi()
         {
-            App.Aktivacija_dugmeta_potvrdi(bttn_potvrdi, val_ime, val_pol, val_adr, val_mesto, val_postanski_br, val_kor_ime, val_loz, val_loz_2);
+            App.Aktivacija_dugmeta_potvrdi(bttn_potvrdi, val_ime, val_pol, val_ulica, val_broj, val_grad, val_pos_br, val_email, val_kor_ime, val_loz, val_loz_2);
         }
 
         private bool Jednakost_lozinki(string loz_1, string loz_2)
@@ -76,13 +71,6 @@ namespace kupovina_avio_karti
             App.Farbanje(psswrdbx_lozinka_2, txtbx_lozinka_2, bttn_vidljivost_2, f);
 
             return jednakost;
-        }
-
-        private void Bttn_odustani_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mw = new MainWindow();
-            mw.Show();
-            this.Close();
         }
 
         private void Txtbx_ime_TextChanged(object sender, TextChangedEventArgs e)
@@ -111,6 +99,125 @@ namespace kupovina_avio_karti
         private void Rdbttn_pol_Checked(object sender, RoutedEventArgs e)
         {
             val_pol = true;
+            Aktivacija_dugmeta_potvrdi();
+        }
+
+        private void Txtbx_ulica_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_ulica"]);
+            bool validacija_sadrzaj = true;
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine,
+                validacija_sadrzaj,
+            };
+
+            val_ulica = true;
+            foreach (bool val in validacija) val_ulica &= val;
+
+            if (val_ulica) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje((TextBox)sender, f);
+            Aktivacija_dugmeta_potvrdi();
+        }
+
+        private void Txtbx_broj_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_broj"]);
+            bool validacija_sadrzaj = true;
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine,
+                validacija_sadrzaj,
+            };
+
+            val_broj = true;
+            foreach (bool val in validacija) val_broj &= val;
+
+            if (val_broj) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje((TextBox)sender, f);
+            Aktivacija_dugmeta_potvrdi();
+        }
+
+        private void Txtbx_grad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_grad"]);
+            bool validacija_sadrzaj = true;
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine,
+                validacija_sadrzaj,
+            };
+
+            val_grad = true;
+            foreach (bool val in validacija) val_grad &= val;
+
+            if (val_grad) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje((TextBox)sender, f);
+            Aktivacija_dugmeta_potvrdi();
+        }
+
+        private void Txtbx_postanski_br_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_pos_br"]);
+            bool validacija_sadrzaj = true;
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine,
+                validacija_sadrzaj,
+            };
+
+            val_pos_br = true;
+            foreach (bool val in validacija) val_pos_br &= val;
+
+            if (val_pos_br) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje((TextBox)sender, f);
+            Aktivacija_dugmeta_potvrdi();
+        }
+
+        private void Txtbx_email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Farba f;
+
+            bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_email"]);
+            bool validacija_sadrzaj = true;
+            bool validacija_baza_pod = true;
+
+            List<bool> validacija = new List<bool>()
+            {
+                validacija_duzine,
+                validacija_sadrzaj,
+                validacija_baza_pod
+            };
+
+            val_email = true;
+            foreach (bool val in validacija) val_email &= val;
+
+            if (val_email) f = Farba.zelena;
+            else f = Farba.crvena;
+
+            App.Farbanje((TextBox)sender, f);
+            txtblck_email_val.Text = Povratna_info(validacija_duzine, validacija_sadrzaj, validacija_baza_pod);
+            Aktivacija_dugmeta_potvrdi();
         }
 
         private void Txtbx_kor_ime_TextChanged(object sender, TextChangedEventArgs e)
@@ -118,7 +225,6 @@ namespace kupovina_avio_karti
             Farba f;
 
             bool validacija_duzine = App.Validacija_minimalne_duzine(sender, (int)Application.Current.Resources["min_br_kar_kor_ime_loz"]);
-            //true dok se ne napravi validacija
             bool validacija_sadrzaj = true;
             bool validacija_baza_pod = true;
 
@@ -136,7 +242,7 @@ namespace kupovina_avio_karti
             else f = Farba.crvena;
 
             App.Farbanje(txtbx_kor_ime, f);
-            Povratna_info_kor_ime_loz(sender, txtblck_kor_ime_val, validacija_duzine, validacija_sadrzaj, validacija_baza_pod);
+            txtblck_kor_ime_val.Text = Povratna_info(sender, validacija_duzine, validacija_sadrzaj, validacija_baza_pod);
             Aktivacija_dugmeta_potvrdi();
         }
 
@@ -170,7 +276,7 @@ namespace kupovina_avio_karti
                 aktivator = false;
                 psswrdbx_lozinka_2.Password = "";
                 txtbx_lozinka_2.Text = "";
-                txtblck_loz_val_2.Visibility = Visibility.Hidden;
+                txtblck_loz_val_2.Text = "";
             }
 
             psswrdbx_lozinka_2.IsEnabled = aktivator;
@@ -178,7 +284,7 @@ namespace kupovina_avio_karti
             bttn_vidljivost_2.IsEnabled = aktivator;
 
             App.Farbanje(psswrdbx_lozinka, txtbx_lozinka, bttn_vidljivost, f);
-            Povratna_info_kor_ime_loz(sender, txtblck_loz_val, validacija_duzine, validacija_sadrzaj, validacija_baza_pod);
+            txtblck_loz_val.Text = Povratna_info(sender, validacija_duzine, validacija_sadrzaj, validacija_baza_pod);
             Aktivacija_dugmeta_potvrdi();
             val_loz_2 = Jednakost_lozinki(psswrdbx_lozinka.Password, psswrdbx_lozinka_2.Password);
         }
@@ -200,8 +306,8 @@ namespace kupovina_avio_karti
             val_loz_2 = Jednakost_lozinki(psswrdbx_lozinka.Password, psswrdbx_lozinka_2.Password);
             Aktivacija_dugmeta_potvrdi();
 
-            if (val_loz_2) txtblck_loz_val_2.Visibility = Visibility.Hidden;
-            else txtblck_loz_val_2.Visibility = Visibility.Visible;
+            if (val_loz_2) txtblck_loz_val_2.Text = "";
+            else txtblck_loz_val_2.Text = "Lozinke se ne poklapaju";
         }
 
         private void Psswrdbx_lozinka_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -256,6 +362,18 @@ namespace kupovina_avio_karti
 
                 App.Postavi_kursor_na_kraj();
             }
+        }
+
+        private void Bttn_odustani_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mw = new MainWindow();
+            mw.Show();
+            this.Close();
+        }
+
+        private void Bttn_potvrdi_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
